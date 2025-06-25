@@ -115,6 +115,7 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp",
-    "structured_binding": "cpp"
+    "structured_binding": "cpp",
+    "range_based_loop": "cpp"
   }
 }

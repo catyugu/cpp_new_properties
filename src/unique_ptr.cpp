@@ -1,26 +1,28 @@
 #include <iostream>
-#include <memory> 
+#include <memory>
 
-// The Resource class
-struct Resource {
-    Resource() { std::cout << "Resource created\n"; }
-    ~Resource() { std::cout << "Resource destroyed\n"; }
-
-    void doSomething() { std::cout << "Resource in use\n"; }
+struct Engine{
+    Engine(){
+        std::cout << "Engine started" << std::endl;
+    }
+    ~Engine(){
+        std::cout << "Engine stopped" << std::endl;
+    }
 };
 
-void useResource(std::unique_ptr<Resource> res) {
-    if (res) {
-        res->doSomething();
+struct Car{
+    std::unique_ptr<Engine> engine;
+    Car() : engine(std::make_unique<Engine>()) {
+        // Constructor body can be empty or used for other logic
     }
-} 
+};
 int main() {
-    // Create a unique_ptr to a Resource object.
-    auto resourcePtr = std::make_unique<Resource>();
-    // Call useResource and transfer ownership of your pointer.
-    useResource(std::move(resourcePtr));
-    auto movedPtr = std::move(resourcePtr);
-
-    std::cout << "main function is ending\n";
+    std::cout << "Entering main scope...\n";
+    {
+        std::cout << "  Entering inner scope...\n";
+        Car car;
+        std::cout << "  ...leaving inner scope.\n";
+    } // 'car' goes out of scope here, destructor is called
+    std::cout << "Left main scope.\n";
     return 0;
 }
